@@ -31,7 +31,7 @@ export const bindRaf = (fn) => {
 		cancellationToken = true;
 	};
 
-	callbackGenerator.cancel = cancelCallback;
+	callbackGenerator.prototype.cancel = cancelCallback;
 
 	return callbackGenerator;
 };

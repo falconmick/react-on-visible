@@ -52,7 +52,7 @@ class OnVisible extends Component {
     stopListening() {
         window.removeEventListener('scroll', this.onScroll);
         window.removeEventListener('resize', this.onScroll);
-        this.onScroll.cancel();
+        this.onScroll.prototype.cancel();
     }
     render() {
         const { visible } = this.state;
