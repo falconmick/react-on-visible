@@ -2,13 +2,19 @@ export const bindRaf = (fn) => {
 	let isRunning = null;
 	let self = null;
 	let args = null;
+	let cancellationToken = false;
 
 	const run = () => {
 		isRunning = false;
-		fn.apply(self, args);
+		if (!cancellationToken) {
+			fn.apply(self, args);
+		}
+		// else {
+		// 	console.log('yay i was deletd!!!');
+		// }
 	};
 
-	return () => {
+	const callbackGenerator = () => {
 		self = this;
 		args = arguments;
 
@@ -18,5 +24,14 @@ export const bindRaf = (fn) => {
 
 		isRunning = true;
 		requestAnimationFrame(run);
+		// setTimeout(run, 5000);
 	};
+
+	const cancelCallback = () => {
+		cancellationToken = true;
+	};
+
+	callbackGenerator.prototype.cancel = cancelCallback;
+
+	return callbackGenerator;
 };
